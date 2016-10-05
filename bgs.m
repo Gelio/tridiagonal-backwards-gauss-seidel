@@ -1,35 +1,35 @@
-% x = BGS(a, b, c, d, x0, epsilon, delta) - funkcja rozwi¹zuj¹ca uk³ad 
-% równañ liniowych Ax = d z macierz¹ trójdiagonaln¹ o wstêgach zapisanych 
+% x = BGS(a, b, c, d, x0, epsilon, delta) - funkcja rozwiazujaca uklad
+% rownan liniowych Ax = d z macierza trojdiagonalna o wstegach zapisanych 
 % w wektorach a, b oraz c. b zawiera elementy z diagonali macierzy A,
-% a jest pasmem poni¿ej, b jest pasmem powy¿ej diagonali.
-% Wektor d jest wektorem rozwi¹zañ.
+% wektor a jest pasmem ponizej, b jest pasmem powyzej diagonali.
+% Wektor d jest wektorem rozwiazan.
 %
-% Funkcja wykorzystuje metodê iteracyjn¹ Gaussa-Seidla w ty³.
+% Funkcja wykorzystuje metode iteracyjna Gaussa-Seidla w tyl.
 %
 % # Warunek stopu
 % Jako warunek stopu wykorzystany jest warunek Gilla:
 % norm(x(i+1) - x(i)) < epsilon * norm(x(i)) - delta
-% Gdzie x(i), x(i+1) to przybli¿enia rozwi¹zania po odpowiednio i oraz i+1
+% Gdzie x(i), x(i+1) to przyblizenia rozwiazania po odpowiednio i oraz i+1
 % krokach iteracji.
 %
-% # Wejœcie
-% * a - wektor o d³ugoœci n sk³adaj¹cy siê z elementów PONI¯EJ diagonali
-%      (elementy te powinny wystepowaæ na indeksach od 2 do n wektora)
-% * b - wektor o d³ugoœci n sk³adaj¹cy siê z elementów NA diagonali
-% * c - wektor o d³ugoœci n sk³adaj¹cy siê z elementów POWY¯EJ diagonali
-%      (elementy te powinny wystêpowaæ na indekasach od 1 do n-1 wektora)
-% * d - wektor o d³ugoœci n sk³adaj¹cy siê z elementów z prawej strony
-%       znaku równoœci
-% * x0 - wektor o d³ugoœci n zawieraj¹cy przybli¿enie pocz¹tkowe
-% * epsilon, delta - parametry okreœlaj¹ce dok³adnoœæ (zobacz sekcjê "Warunek
-%                    stopu")
+% # Wejscie
+% * a - wektor o dlugosci n skladajacy sie z elementow PONIZEJ diagonali
+%      (elementy te powinny wystepowac na indeksach od 2 do n wektora)
+% * b - wektor o dlugosci n skladajacy sie z elementow NA diagonali
+% * c - wektor o dlugosci n skladajacy sie z elementow POWYZEJ diagonali
+%      (elementy te powinny wystepowac na indekasach od 1 do n-1 wektora)
+% * d - wektor o dlugosci n skladajacy sie z elementow z prawej strony
+%       znaku rownosci
+% * x0 - wektor o dlugosci n zawierajacy przyblizenie poczatkowe
+% * epsilon, delta - parametry okreslajace dokladnosc (zobacz sekcje
+%                    "Warunek stopu")
 % 
 %
-% # Wyjœcie
-% * x - wektor o d³ugoœci n zawieraj¹cy przybli¿one rozwi¹zanie uk³adu
-% * liczbaIteracji - iloœæ wykonanych iteracji
+% # Wyjscie
+% * x - wektor o dlugosci n zawierajacy przyblizone rozwiazanie ukladu
+% * liczbaIteracji - ilosc wykonanych iteracji
 %
-% Autor: Grzegorz Rozdzialik (grupa dziekañska D4, na laboratorium grupa 2)
+% Autor: Grzegorz Rozdzialik (grupa dziekanska D4, na laboratorium grupa 2)
 
 function [x, liczbaIteracji] = bgs(a, b, c, d, x0, epsilon, delta)
 
@@ -37,14 +37,14 @@ xPoprzednie = x0;
 xAktualne = bgsIteration(a, b, c, d, xPoprzednie);
 liczbaIteracji = 1;
 
-% Dopóki warunek stopu nie jest spe³niony wykonuj kolejne iteracje
+% Dopoki warunek stopu nie jest spelniony wykonuj kolejne iteracje
 while stopCondition(xPoprzednie, xAktualne, epsilon, delta) == 0
     liczbaIteracji = liczbaIteracji+1;
     xPoprzednie = xAktualne;
     xAktualne = bgsIteration(a, b, c, d, xPoprzednie);
 end
 
-% Przepisz wynik na wyjœcie
+% Przepisz wynik na wyjscie
 x = xAktualne;
 
 end
