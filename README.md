@@ -1,4 +1,4 @@
-# Backwards Gauss Seidel
+# Backwards Gauss-Seidel
 Linear equation system solver for a tridiagonal complex matrix using the Backwards Gauss-Seidel
 algorithm.
 
@@ -10,6 +10,13 @@ of the task. I am sorry for all non-Polish speakers.
 If you have any questions
 feel free to create an issue or contact me directly.
 
+
+# Usage
+This repository contains 3 files:
+* _stopCondition.m_ - checks if the stop condition has been met (based on Gill's condition)
+* _bgsIteration.m_ - does a single iteration of approximating the solution
+* _bgs.m_ - approximates the initial solution by executing `bgsIteration` until `stopCondition`
+has been met
 
 # Author
 The author of this script is [Grzegorz Rozdzialik](voreny.gelio@gmail.com). 
