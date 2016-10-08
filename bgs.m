@@ -1,8 +1,8 @@
-% x = BGS(a, b, c, d, x0, epsilon, delta) - funkcja rozwiazujaca uklad
-% rownan liniowych Ax = d z macierza trojdiagonalna o wstegach zapisanych 
-% w wektorach a, b oraz c. b zawiera elementy z diagonali macierzy A,
-% wektor a jest pasmem ponizej, b jest pasmem powyzej diagonali.
-% Wektor d jest wektorem rozwiazan.
+% x = BGS(low, dia, upp, b, x0, epsilon, delta) - funkcja rozwiazujaca uklad
+% rownan liniowych Ax = b z macierza trojdiagonalna o wstegach zapisanych 
+% w wektorach low, dia oraz upp. dia zawiera elementy z diagonali macierzy A,
+% wektor low jest pasmem ponizej, upp jest pasmem powyzej diagonali.
+% Wektor b jest wektorem z prawej strony rownosci.
 %
 % Funkcja wykorzystuje metode iteracyjna Gaussa-Seidla w tyl.
 %
@@ -13,20 +13,22 @@
 % krokach iteracji.
 %
 % # Wejscie
-% * a - wektor o dlugosci n skladajacy sie z elementow PONIZEJ diagonali
+% * low - wektor o dlugosci n skladajacy sie z elementow PONIZEJ diagonali
 %      (elementy te powinny wystepowac na indeksach od 2 do n wektora)
-% * b - wektor o dlugosci n skladajacy sie z elementow NA diagonali
-% * c - wektor o dlugosci n skladajacy sie z elementow POWYZEJ diagonali
+% * dia - wektor o dlugosci n skladajacy sie z elementow NA diagonali
+% * upp - wektor o dlugosci n skladajacy sie z elementow POWYZEJ diagonali
 %      (elementy te powinny wystepowac na indekasach od 1 do n-1 wektora)
-% * d - wektor o dlugosci n skladajacy sie z elementow z prawej strony
+% * b - wektor o dlugosci n skladajacy sie z elementow z prawej strony
 %       znaku rownosci
 % * x0 - wektor o dlugosci n zawierajacy przyblizenie poczatkowe
 % * epsilon, delta - parametry okreslajace dokladnosc (zobacz sekcje
 %                    "Warunek stopu")
+% Wektory moga posiadac elementy zespolone.
 % 
 %
 % # Wyjscie
-% * x - wektor o dlugosci n zawierajacy przyblizone rozwiazanie ukladu
+% * x - wektor o dlugosci n zawierajacy przyblizone rozwiazanie ukladu.
+%       Moze posiadac elementy zespolone
 % * liczbaIteracji - ilosc wykonanych iteracji
 %
 % Autor: Grzegorz Rozdzialik (grupa dziekanska D4, na laboratorium grupa 2)
