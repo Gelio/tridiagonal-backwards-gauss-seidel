@@ -10,8 +10,7 @@
 % Autor: Grzegorz Rozdzialik (grupa dziekanska D4, na laboratorium grupa 2)
 
 function x = bgsIteration(low, dia, upp, b, x0)
-x = zeros(size(d));
-n = length(d);
+n = length(b);
 
 % Przygotowanie wektorow pomocniczych
 lowR = real(low);

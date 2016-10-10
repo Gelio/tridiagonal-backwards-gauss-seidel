@@ -33,17 +33,17 @@
 %
 % Autor: Grzegorz Rozdzialik (grupa dziekanska D4, na laboratorium grupa 2)
 
-function [x, liczbaIteracji] = bgs(a, b, c, d, x0, epsilon, delta)
+function [x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta)
 
 xPoprzednie = x0;
-xAktualne = bgsIteration(a, b, c, d, xPoprzednie);
+xAktualne = bgsIteration(low, dia, upp, b, xPoprzednie);
 liczbaIteracji = 1;
 
 % Dopoki warunek stopu nie jest spelniony wykonuj kolejne iteracje
 while stopCondition(xPoprzednie, xAktualne, epsilon, delta) == 0
     liczbaIteracji = liczbaIteracji+1;
     xPoprzednie = xAktualne;
-    xAktualne = bgsIteration(a, b, c, d, xPoprzednie);
+    xAktualne = bgsIteration(low, dia, upp, b, xPoprzednie);
 end
 
 % Przepisz wynik na wyjscie
