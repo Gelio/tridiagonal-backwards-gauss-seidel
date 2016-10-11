@@ -42,6 +42,6 @@ xR(1) = (bR(1) + diaI(1)*xI(1) - uppR(1)*xR(2) + uppI(1)*xI(2)) / diaR(1);
 xI(1) = (bI(1) - diaI(1)*xR(1) - uppR(1)*xI(2) - uppI(1)*xR(2)) / diaR(1);
 
 % Przygotowanie wektora wynikowego
-x = xR + xI*i;
+x = complex(xR, xI);
 
 end
