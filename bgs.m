@@ -23,6 +23,8 @@
 % * x0 - wektor o dlugosci n zawierajacy przyblizenie poczatkowe
 % * epsilon, delta - parametry okreslajace dokladnosc (zobacz sekcje
 %                    "Warunek stopu")
+% * maxIteracji - limit liczby iteracji (skalar, opcjonalny, domyslnie
+%                 1000)
 % Wektory moga posiadac elementy zespolone.
 % 
 %
@@ -33,14 +35,18 @@
 %
 % Autor: Grzegorz Rozdzialik (grupa dziekanska D4, na laboratorium grupa 2)
 
-function [x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta)
+function [x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta, maxIteracji)
+maxIteracjiDomyslny = 1000;
+if nargin < 8
+    maxIteracji = maxIteracjiDomyslny;
+end
 
 xPoprzednie = x0;
 xAktualne = bgsIteration(low, dia, upp, b, xPoprzednie);
 liczbaIteracji = 1;
 
 % Dopoki warunek stopu nie jest spelniony wykonuj kolejne iteracje
-while stopCondition(xPoprzednie, xAktualne, epsilon, delta) == 0
+while stopCondition(xPoprzednie, xAktualne, epsilon, delta, liczbaIteracji, maxIteracji) == 0
     liczbaIteracji = liczbaIteracji+1;
     xPoprzednie = xAktualne;
     xAktualne = bgsIteration(low, dia, upp, b, xPoprzednie);
