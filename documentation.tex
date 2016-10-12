@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\setlength{\parskip}{1em}
+
+
+\begin{document}
+	\title{Sprawozdanie\\Metody Numeryczne 2, laboratorium 1}
+	\author{Grzegorz Rozdzialik (D4, grupa lab. 2)}
+	\maketitle	
+
+	\section{Zadanie}
+	Rozwiązywanie układu równań z macierzą trójdiagonalną w dziedzinie zespolonej metodą Gaussa-Seidla w tył (Backwards Gauss-Seidel).
+	
+	\section{Opis metody}
+	Metoda Gaussa-Seidla w tył jest iteracyjną metodą rozwiązywania układów równań liniowych. Jest ona podobna do zwykłej metody Gaussa-Seidla, przy czym w tym przypadku obliczenia rozpoczynamy od ostatnich elementów wektora rozwiązań.
+	
+	Szukamy rozwiązania układu równań $Ax = b$, gdzie
+	$A \in \mathbb{C}^{n \times n}$ ($A$ - macierz trójdiagonalna),
+	$b \in \mathbb{C}^{n}$,
+	$n \in \mathbb{N}$.
+	
+	Mając przybliżenie początkowe $x^{(0)} \in \mathbb{C}^n$ tworzymy ciąg kolejnych przybliżeń rozwiązań $\left\{ x^{(k)} \right\} (k = 1, 2, \dots)$ taki, że
+	$$\lim_{k \to +\infty} x^{(k)} = x$$
+
+	Układ $Ax = b$ można zapisać w postaci:
+	\[
+	\begin{bmatrix}
+		d_1    & u_1    & 0            & 0      & 0       &         & \dots   &         & 0       \\
+		l_2    & d_2    & u_2          & 0      & 0       &         & \dots   &         & 0       \\
+		0      & l_3    & d_3          & u_3    & 0       &         & \dots   &         & 0       \\
+		0      & 0      & l_4          & d_4    & u_4     &         & \dots   &         & 0       \\
+		       &        &              & \ddots & \ddots  & \ddots  &         &         & \vdots  \\
+		\vdots & \vdots &              & 0      & l_{n-3} & d_{n-3} & u_{n-3} & 0       & 0       \\
+		       &        &              &        & 0       & l_{n-2} & d_{n-2} & u_{n-2} & 0       \\
+		       &        &              &        &         & 0       & l_{n-1} & d_{n-1} & u_{n-1} \\
+		0      & 0      & \hdotsfor{3} &        & 0       & l_n     & d_n     &
+	\end{bmatrix}
+	\begin{bmatrix}
+		x_1 \\
+		x_2 \\
+		x_3 \\
+		\\
+		\vdots\\
+		\\
+		\\
+		\\
+		x_{n-1} \\
+		x_n
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		b_1 \\
+		b_2 \\
+		b_3 \\
+		\\
+		\vdots\\
+		\\
+		\\
+		\\
+		b_{n-1} \\
+		b_n
+	\end{bmatrix}
+	\]
+	gdzie $l_i, d_i, u_i, b_i, x_i \in \mathbb{C}^n$ dla każdego $i=1, \dots , n$.
+	
+	Po wymnożeniu otrzymujemy następujący układ równań:
+	\[
+	\begin{cases}
+		\begin{aligned}
+			d_1 x_1 + u_1 x_2                               & = b_1     \\
+			l_2 x_1 + d_2 x_2 + u_2 x_3                     & = b_2     \\
+			l_3 x_2 + d_3 x_3 + u_3 x_4                     & = b_3     \\
+			\vdots    \hspace{1em}                          &  \\
+			l_i x_{i-1} + d_i x_i + u_i x_{i+1}             & = b_i     \\
+			\vdots        \hspace{1em}                      &  \\
+			l_{n-1} x_{n-2} + d_{n-1} x_{n-1} + u_{n-1} x_n & = b_{n-1} \\
+			l_n x_{n-1} + d_n x_n                           & = b_n
+		\end{aligned}
+	\end{cases}
+	\]
+	Następnie $i$-tego równania wyliczamy
+	$$
+	x_i = \frac{b_i - l_i x_{i-1} - u_i x_{i+1}}{d_i}
+	$$
+	Wyjątkiem są równania pierwsze oraz ostatnie, ponieważ nie istnieją współczynniki odpowiednio $l_1$ oraz $u_n$, stąd:
+	$$
+	x_1 = \frac{b_1 - u_1 x_2}{d_1}
+	$$
+	$$
+	x_n = \frac{b_n - l_n x_{n-1}}{d_n}
+	$$
+	
+	Wprowadźmy następujące oznaczenia:
+	oznaczenia na części rzeczywiste, urojone dla l, d, u, x, b
+	
+	W $k$-tym kroku obliczamy przybliżenie $x^{(k+1)}$ w taki sposób, że zaczynamy od $x^{(k+1)}_n$, następnie $x^{(k+1)}_{n-1}$, $\dots$, $x^{(k+1)}_1$.
+	
+	$$
+	x^{(k+1)}_n = \frac{b_n - l_n x^{(k)}_{n-1}}{d_n}
+	$$
+	rozpisać na część rzeczywistą i urojoną
+	
+	
+\end{document}
