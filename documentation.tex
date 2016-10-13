@@ -140,15 +140,61 @@
 	Dodatkowo w implementacji nałożyłem restrykcję na maksymalną ilość iteracji. Po $10000$ iteracjach obliczenia nie będą kontynuowane.
 	
 	\section{Poprawność algorytmu}
-	Algorytm działa poprawnie dla macierzy diagonalnie dominujących (kolumnowo lub wierszowo), oraz dla macierzy dodatnio określonych. Wtedy też w ogólności metoda Gaussa-Seidla, a więc i Gaussa-Seidla w tył, jest zbieżna globalnie.
+	W ogólności metoda Gaussa-Seidla, a więc i metoda Gaussa-Seidla w tył, jest zbieżna globalnie dla macierzy diagonalnie silnie dominujących (kolumnowo lub wierszowo) oraz macierzy dodatnio określonych.
 	
-	Dla macierzy nie spełniający wyżej wymienionych kryteriów, algorytm nie daje dobrych rozwiązań.
+	Po przeprowadzeniu testów odkryłem, że zaimplementowany algorytm działa dobrze, jeżeli część rzeczywista elementów z diagonali dominuje w rzędzie lub kolumnie, a część urojona tego elementu jest znacznie mniejsza od części rzeczywistej.
+	
+	Jeżeli część urojona elementów z diagonali jest porównywalna do części rzeczywistej, to algorytm daje złe wyniki.
 	
 	\section{Przykłady}
 	\begin{enumerate}[label=\textbf{Układ \arabic*}]
-		\item TODO
+		\item
+			$n = 5$ \\
+			Elementy na diagonali są znacznie większe od elementów na dwóch innych pasmach. Dodatkowo nie zawierają części urojonej.
+			\begin{align*}
+				\left[
+					\begin{array}{ccccc} 61354 & 44 + 59\, \mathrm{i} & 0 & 0 & 0\\ 60 + 88\, \mathrm{i} & 83844 & 54 + 27\, \mathrm{i} & 0 & 0\\ 0 & 84 + 40\, \mathrm{i} & 89650 & 4 + 42\, \mathrm{i} & 0\\ 0 & 0 & 81 + 84\, \mathrm{i} & 48721 & 55 + 50\, \mathrm{i}\\ 0 & 0 & 0 & 80 + 63\, \mathrm{i} & 25148 \end{array}\
+				\right]
+				&x
+				&= 
+				\left[
+					\begin{array}{c} 20 + 62\, \mathrm{i}\\ 38 + 10\, \mathrm{i}\\ 71 + 37\, \mathrm{i}\\ 2 + 50\, \mathrm{i}\\ 28 + 32\, \mathrm{i} \end{array}
+				\right]	
+			\end{align*}
+			Znalezione rozwiązanie:
+			\begin{align*}
+			x = 
+				\left[
+					\begin{array}{c}
+					0.000325764927490767 + 0.00101000840330470i\\
+					0.000453671976952820 + 0.000117676750075580i\\
+					0.000792072530469199 + 0.000411492905043098i\\
+					4.04854673760366e-05 + 0.00102061129748172i\\
+					0.00111583663410018 + 0.00126911883695549i
+					\end{array}
+				\right]
+			\end{align*}
+			Liczba iteracji: $9$\\
+			Rząd błędu: $-6$\\
+			Czas działania: $0.290354\text{ms}$
 		
-		\item TODO
+		\item
+			$n = 4$\\
+			Elementy na diagonali są znacznie większe od elementów na dwóch innych pasmach. Ich część urojona jest porównywalna z rzeczywistą.
+			{\small
+			\begin{align*}
+				\left[
+					\begin{array}{cccc} 12339 + 18978\, \mathrm{i} & 22 + 91\, \mathrm{i} & 0 & 0\\ 39 + 74\, \mathrm{i} & 17852 + 19484\, \mathrm{i} & 60 + 64\, \mathrm{i} & 0\\ 0 & 95 + 35\, \mathrm{i} & 18710 + 12993\, \mathrm{i} & 24 + 14\, \mathrm{i}\\ 0 & 0 & 94 + 34\, \mathrm{i} & 15539 + 14995\, \mathrm{i} \end{array}
+				\right]
+				&x
+				&=
+				\left[
+					\begin{array}{c} 79 + 40\, \mathrm{i}\\ 80 + 56\, \mathrm{i}\\ 35 + 70\, \mathrm{i}\\ 33 + 83\, \mathrm{i} \end{array}
+				\right]
+			\end{align*}
+			}%
+			Znalezione rozwiązanie: \textbf{brak} - przekroczono liczbę iteracji.\\
+			Czas działania: $97.203925\text{ms}$\\
 		
 	\end{enumerate}
 \end{document}
