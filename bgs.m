@@ -24,7 +24,7 @@
 % * epsilon, delta - parametry okreslajace dokladnosc (zobacz sekcje
 %                    "Warunek stopu")
 % * maxIteracji - limit liczby iteracji (skalar, opcjonalny, domyslnie
-%                 1000)
+%                 10000)
 % Wektory moga posiadac elementy zespolone.
 % 
 %
@@ -36,7 +36,7 @@
 % Autor: Grzegorz Rozdzialik (grupa dziekanska D4, na laboratorium grupa 2)
 
 function [x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta, maxIteracji)
-maxIteracjiDomyslny = 1000;
+maxIteracjiDomyslny = 10000;
 if nargin < 8
     maxIteracji = maxIteracjiDomyslny;
 end

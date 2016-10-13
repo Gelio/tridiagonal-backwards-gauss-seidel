@@ -22,7 +22,7 @@ przedzialX0I = [0 100];
 % Parametry stopu
 epsilon = eps;
 delta = eps/2;
-maxIteracji = 1000;
+maxIteracji = 10000;
 
 
 
