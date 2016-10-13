@@ -147,6 +147,7 @@
 	Jeżeli część urojona elementów z diagonali jest porównywalna do części rzeczywistej, to algorytm daje złe wyniki.
 	
 	\section{Przykłady}
+	We wszystkich przykładach $\varepsilon = \text{eps} \approx 2.22 * 10^{-16}$, $\delta = 0$.
 	\begin{enumerate}[label=\textbf{Układ \arabic*}]
 		\item
 			$n = 5$ \\
@@ -161,6 +162,7 @@
 					\begin{array}{c} 20 + 62\, \mathrm{i}\\ 38 + 10\, \mathrm{i}\\ 71 + 37\, \mathrm{i}\\ 2 + 50\, \mathrm{i}\\ 28 + 32\, \mathrm{i} \end{array}
 				\right]	
 			\end{align*}
+			
 			Znalezione rozwiązanie:
 			\begin{align*}
 			x = 
@@ -174,6 +176,7 @@
 					\end{array}
 				\right]
 			\end{align*}
+			
 			Liczba iteracji: $9$\\
 			Rząd błędu: $-6$\\
 			Czas działania: $0.290354\text{ms}$
@@ -193,8 +196,80 @@
 				\right]
 			\end{align*}
 			}%
-			Znalezione rozwiązanie: \textbf{brak} - przekroczono liczbę iteracji.\\
-			Czas działania: $97.203925\text{ms}$\\
+			Znalezione rozwiązanie: \textbf{brak} - przekroczono maksymalną liczbę iteracji.\\
+			Czas działania: $97.203925\text{ms}$
 		
+		\item
+			$n = 4$\\
+			Elementy na diagonali są porównywalne z elementami na dwóch innych pasmach. Ich część urojona jest porównywalna z rzeczywistą.
+			\begin{align*}
+				\left[
+					\begin{array}{cccc} 19 + 53\, \mathrm{i} & 43 + 19\, \mathrm{i} & 0 & 0\\ 71 + 11\, \mathrm{i} & 76\, \mathrm{i} & 44 + 50\, \mathrm{i} & 0\\ 0 & 48 + 54\, \mathrm{i} & 21 + 65\, \mathrm{i} & 48 + 88\, \mathrm{i}\\ 0 & 0 & 28 + 55\, \mathrm{i} & 54 + 68\, \mathrm{i} \end{array}
+				\right]
+				&x
+				&=
+				\left[
+					\begin{array}{c} 83 + 32\, \mathrm{i}\\ 69 + 16\, \mathrm{i}\\ 71 + 74\, \mathrm{i}\\ 18 + 57\, \mathrm{i} \end{array}
+				\right]
+			\end{align*}
+			Znalezione rozwiązanie: \textbf{brak} - przekroczono maksymalną liczbę iteracji.\\
+			Czas działania: $94.710700\text{ms}$
+		
+		\item
+			$n = 5$\\
+			Elementy na diagonali są porównywalne z elementami na dwóch innych pasmach. Nie mają części urojonej.
+			\begin{align*}
+				\left[
+					\begin{array}{ccccc} 95 & 16 + 7\, \mathrm{i} & 0 & 0 & 0\\ 17 + 72\, \mathrm{i} & 35 & 27 + 88\, \mathrm{i} & 0 & 0\\ 0 & 83 + 93\, \mathrm{i} & 5 & 34 + 15\, \mathrm{i} & 0\\ 0 & 0 & 3 + 56\, \mathrm{i} & 93 & 20 + 80\, \mathrm{i}\\ 0 & 0 & 0 & 1 + 83\, \mathrm{i} & 78 \end{array}
+				\right]
+				&x
+				&=
+				\left[
+					\begin{array}{c} 36 + 89\, \mathrm{i}\\ 30 + 41\, \mathrm{i}\\ 68 + 50\, \mathrm{i}\\ 5 + 36\, \mathrm{i}\\ 33 + 99\, \mathrm{i} \end{array}
+				\right]
+			\end{align*}
+			Znalezione rozwiązanie: \textbf{brak} - przekroczono maksymalną liczbę iteracji.\\
+			Czas działania: $101.725476\text{ms}$
+		
+		\item
+			$n = 5$\\
+			Elementy na diagonali są większe od elementów na dwóch innych pasmach. Nie mają części urojonej.
+			\begin{align*}
+				\left[
+					\begin{array}{ccccc} 317 & 15 + 66\, \mathrm{i} & 0 & 0 & 0\\ 19 + 4\, \mathrm{i} & 363 & 67 + 41\, \mathrm{i} & 0 & 0\\ 0 & 4 + 80\, \mathrm{i} & 337 & 90 + 66\, \mathrm{i} & 0\\ 0 & 0 & 61 + 39\, \mathrm{i} & 394 & 68 + 40\, \mathrm{i}\\ 0 & 0 & 0 & 73 + 6\, \mathrm{i} & 258 \end{array}
+				\right]
+				&x
+				&=
+				\left[
+					\begin{array}{c} 62 + 86\, \mathrm{i}\\ 16 + 43\, \mathrm{i}\\ 33 + 58\, \mathrm{i}\\ 27 + 13\, \mathrm{i}\\ 54 + 58\, \mathrm{i} \end{array}
+				\right]
+			\end{align*}
+			Znalezione rozwiązanie:
+			$$
+			x =
+				\left[
+					\begin{array}{c}
+						0.210003815360937 + 0.259969953085646i\\
+						0.0367475440953636 + 0.0776124641037519i\\
+						0.0937110364191769 + 0.160199771371148i\\
+						0.0603979474198726 - 0.0309935213767811i\\
+						0.191492204302669 + 0.232171082852658i
+					\end{array}
+				\right]
+			$$
+			Liczba iteracji: $19$\\
+			Rząd błędu: $-1$\\
+			Czas działania: $0.722562\text{ms}$
+	\end{enumerate}
+
+
+	\section{Wnioski}
+	
+	\begin{enumerate}
+		\item
+			Aby algorytm zadziałał, część rzeczywista elementów na diagonali musi być większa od części urojonej tychże elementów. Dodatkowo macierz powinna być diagonalnie dominująca (wierszowo lub kolunowo).
+			
+		\item
+			Im elementy z głównej diagonali są większe od elementów z pozostałych dwóch pasm, tym dokładność algorytmu jest lepsza. Można to zauważyć porównując układ 1, w którym elementy na diagonali były znacznie większe od pozostałych, oraz układ 5, gdzie elementy z diagonali były maksymalnie pięciokrotnie większe.
 	\end{enumerate}
 \end{document}
