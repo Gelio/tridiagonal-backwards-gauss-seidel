@@ -22,7 +22,7 @@ function varargout = bgsGUI(varargin)
 
 % Edit the above text to modify the response to help bgsGUI
 
-% Last Modified by GUIDE v2.5 14-Oct-2016 16:26:59
+% Last Modified by GUIDE v2.5 14-Oct-2016 16:39:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -75,10 +75,63 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
+% Rozmiar uk³adu równañ
+N = str2double(handles.nEdit.String);
+% Elementy z ukladu (odpowiednio R - czesc rzeczywista, I - czesc zespolona)
+% Przedzial na elementy pod i nad diagonala
+przedzialR = [str2double(handles.outsideDiagRealFrom.String) str2double(handles.outsideDiagRealTo.String)];
+przedzialI = [str2double(handles.outsideDiagImagFrom.String) str2double(handles.outsideDiagRealTo.String)];
+% Przedzial na elementy na diagonali
+przedzialDiagR = [str2double(handles.diagRealFrom.String) str2double(handles.diagRealTo.String)];
+przedzialDiagI = [str2double(handles.diagImagFrom.String) str2double(handles.diagImagTo.String)];
+% Przedzial na wektor b
+przedzialBR = [str2double(handles.bRealFrom.String) str2double(handles.bRealTo.String)];
+przedzialBI = [str2double(handles.bImagFrom.String) str2double(handles.bImagTo.String)];
+% Przedzial na wektor x0
+przedzialX0R = [str2double(handles.x0RealFrom.String) str2double(handles.x0RealTo.String)];
+przedzialX0I = [str2double(handles.x0ImagFrom.String) str2double(handles.x0ImagTo.String)];
+
+% Parametry stopu
+epsilon = str2double(handles.epsilonEdit.String);
+delta = str2double(handles.deltaEdit.String);
+maxIteracji = str2double(handles.maxIterEdit.String);
+
+% Generowanie wektorow
+% Wszystkie powinny byc tej samej dlugosci (N), stad dodajemy odpowiednio
+% zera
+upp = [randComplex(przedzialR, przedzialI, 1, N-1) 0];
+dia = randComplex(przedzialDiagR, przedzialDiagI, 1, N);
+low = [0 randComplex(przedzialR, przedzialI, 1, N-1)];
+% Zrekonstruowanie macierzy A
+A = diag(dia) + diag(upp(1:end-1), 1) + diag(low(2:end), -1);
+
+% Generowanie wektora b
+b = randComplex(przedzialBR, przedzialBI, 1, N);
+% Generowanie przyblizenia poczatkowego x0
+x0 = randComplex(przedzialX0R, przedzialX0I, 1, N);
+
+
+% Obliczenie prawdziwego rozwiazania niezalezna metoda
+xNiezalezne = reshape(linsolve(A, reshape(b, N, 1)), 1, N);
+
+% Rozwiazywanie ukladu
+tic;
+[x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta, maxIteracji);
+czasDzialania = toc;
+
+if all(isnan(x))
+    set(handles.errorMagnitude, 'String', 'blad');
+else
+    % Obliczenie bledu
+    blad = norm(x-xNiezalezne);
+    rzadBledu = round(log10(blad));
+
+    set(handles.errorMagnitude, 'String', rzadBledu);
+end
+
+set(handles.iterationCount, 'String', liczbaIteracji);
+set(handles.timeElapsed, 'String', sprintf('%fms', czasDzialania*1000));
 
 
 function bImagTo_Callback(hObject, eventdata, handles)
@@ -507,6 +560,29 @@ function maxIterEdit_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function maxIterEdit_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to maxIterEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function nEdit_Callback(hObject, eventdata, handles)
+% hObject    handle to nEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of nEdit as text
+%        str2double(get(hObject,'String')) returns contents of nEdit as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function nEdit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to nEdit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
