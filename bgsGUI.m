@@ -22,7 +22,7 @@ function varargout = bgsGUI(varargin)
 
 % Edit the above text to modify the response to help bgsGUI
 
-% Last Modified by GUIDE v2.5 14-Oct-2016 16:39:23
+% Last Modified by GUIDE v2.5 15-Oct-2016 10:42:40
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -111,23 +111,27 @@ b = randComplex(przedzialBR, przedzialBI, 1, N);
 % Generowanie przyblizenia poczatkowego x0
 x0 = randComplex(przedzialX0R, przedzialX0I, 1, N);
 
-
-% Obliczenie prawdziwego rozwiazania niezalezna metoda
-xNiezalezne = reshape(linsolve(A, reshape(b, N, 1)), 1, N);
-
 % Rozwiazywanie ukladu
 tic;
 [x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta, maxIteracji);
 czasDzialania = toc;
 
 if all(isnan(x))
-    set(handles.errorMagnitude, 'String', 'blad');
+    set(handles.errorMagnitudeLinsolve, 'String', 'blad');
+    set(handles.errorMagnitudeMultiplication, 'String', 'blad');
 else
-    % Obliczenie bledu
-    blad = norm(x-xNiezalezne);
-    rzadBledu = round(log10(blad));
+    % Obliczenie prawdziwego rozwiazania niezalezna metoda
+    xNiezalezne = reshape(linsolve(A, reshape(b, N, 1)), 1, N);
+    
+    % Obliczenie bledow
+    bladLinsolve = norm(x-xNiezalezne);
+    rzadBleduLinsolve = round(log10(bladLinsolve));
 
-    set(handles.errorMagnitude, 'String', rzadBledu);
+    bladPoWymnozeniu = norm(A*reshape(x, N, 1) - reshape(b, N, 1));
+    rzadBleduPoWymnozeniu = round(log10(bladPoWymnozeniu));
+    
+    set(handles.errorMagnitudeLinsolve, 'String', rzadBleduLinsolve);
+    set(handles.errorMagnitudeMultiplication, 'String', rzadBleduPoWymnozeniu);
 end
 
 set(handles.iterationCount, 'String', liczbaIteracji);

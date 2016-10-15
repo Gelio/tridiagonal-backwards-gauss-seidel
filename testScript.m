@@ -40,10 +40,6 @@ b = randComplex(przedzialBR, przedzialBI, 1, N);
 % Generowanie przyblizenia poczatkowego x0
 x0 = randComplex(przedzialX0R, przedzialX0I, 1, N);
 
-
-% Obliczenie prawdziwego rozwiazania niezalezna metoda
-xNiezalezne = reshape(linsolve(A, reshape(b, N, 1)), 1, N);
-
 % Rozwiazywanie ukladu
 tic;
 [x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta, maxIteracji);
@@ -52,11 +48,19 @@ czasDzialania = toc;
 if all(isnan(x))
     fprintf('Nie mozna obliczyc rozwiazania. Osiagnieto maksymalna liczbe iteracji, a wynik nie jest liczba.\n');
 else
+    % Obliczenie prawdziwego rozwiazania niezalezna metoda
+    xNiezalezne = reshape(linsolve(A, reshape(b, N, 1)), 1, N);
+    
     % Obliczenie bledu
-    blad = norm(x-xNiezalezne);
-    rzadBledu = round(log10(blad));
+    bladLinsolve = norm(x-xNiezalezne);
+    rzadBleduLinsolve = round(log10(bladLinsolve));
+    
+    bladPoWymnozeniu = norm(A*reshape(x, N, 1) - reshape(b, N, 1));
+    rzadBleduPoWymnozeniu = round(log10(bladPoWymnozeniu));
 
-    fprintf('Obliczono rozwiazanie w ciagu %d iteracji. Rzad bledu: %d\n', liczbaIteracji, rzadBledu);
+    fprintf('Obliczono rozwiazanie w ciagu %d iteracji.\n', liczbaIteracji);
+    fprintf('Rzad bledu (wzgledem linsolve): %d\n', rzadBleduLinsolve);
+    fprintf('Rzad bledu (wzgledem wyliczonego wektora b): %d\n', rzadBleduPoWymnozeniu);
 end
 
 fprintf('Czas dzialania: %fms\n', czasDzialania*1000);
