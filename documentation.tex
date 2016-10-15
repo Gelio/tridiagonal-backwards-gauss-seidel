@@ -4,6 +4,7 @@
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{enumitem}
+\usepackage{graphicx}
 \setlength{\parskip}{1em}
 
 
@@ -268,9 +269,37 @@
 	
 	\begin{enumerate}
 		\item
-			Aby algorytm zadziałał, część rzeczywista elementów na diagonali musi być większa od części urojonej tychże elementów. Dodatkowo macierz powinna być diagonalnie dominująca (wierszowo lub kolunowo).
+			Aby algorytm zadziałał, część rzeczywista elementów na diagonali musi być większa od części urojonej tychże elementów. Dodatkowo macierz powinna być diagonalnie dominująca (wierszowo lub kolumnowo).
 			
 		\item
 			Im elementy z głównej diagonali są większe od elementów z pozostałych dwóch pasm, tym dokładność algorytmu jest lepsza. Można to zauważyć porównując układ 1, w którym elementy na diagonali były znacznie większe od pozostałych, oraz układ 5, gdzie elementy z diagonali były maksymalnie pięciokrotnie większe.
 	\end{enumerate}
+
+	
+	\section{Skrypt testujący}
+	Do metody został dołączony skrypt testujący, pozwalający na wygenerowanie losowych wartości elementów i sprawdzenie poprawności działania metody. Możliwe parametry to ustawienie oddzielnie zakresu części rzeczywistej i części urojonej dla:
+	\begin{itemize}
+		\item rozmiaru układu równań $n$
+		\item elementów na diagonali macierzy $A$
+		\item elementów poza diagonalą macierzy $A$
+		\item elementów wektora $b$
+		\item elementów wektora przybliżenia początkowego $x^{(0)}$
+		\item parametrów $\varepsilon, \delta$
+		\item maksymalnej liczby iteracji
+	\end{itemize}
+	Skrypt pokazuje rząd błędu (porównując najpierw z rozwiązaniem obliczonym przez $linsolve$, następnie jako $\|Ax - b\|$), ilość iteracji oraz czas potrzebny na obliczenia.
+	
+
+	\section{Interfejs graficzny}
+	Do metody został dołączony interfejs graficzny. Znajduje się on w pliku \textit{bgsGUI.fig}. Pozwala na zmianę zakresu losowanych elementów z podziałem na elementy na diagonali macierzy $A$, poza diagonalą (ale nadal w macierzy $A$), wektora $b$ oraz wektora przybliżenia początkowego $x^{(0)}$. Dodatkowo możliwe jest zmienienie rozmiaru $n$ układu równań oraz dostosowanie parametrów stopu $\varepsilon, \delta$ oraz maksymalnej liczby iteracji.
+	
+	\includegraphics[scale=0.8]{gui-image}
+	
+	Interfejs graficzny jest graficzną wersją skryptu testującego \textit{testScript.m} i pokazuje następujące wyniki:
+	\begin{itemize}
+		\item rząd błędu liczony względem rozwiązania obliczonego za pomocą $linsolve$ dostępnego w Matlabie
+		\item rząd błędu liczony względem wektora $b$ ($\|Ax - b\|$)
+		\item ilość iteracji
+		\item czas działania (w milisekundach)
+	\end{itemize}
 \end{document}
