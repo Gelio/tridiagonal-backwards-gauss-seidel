@@ -19,7 +19,7 @@
 
 function result = stopCondition(xPrevious, xCurrent, epsilon, delta, iterationCount, maxIteration)
 
-if iterationCount > maxIteration
+if iterationCount >= maxIteration
     % Osiagnieto maksymalna ilosc iteracji
     result = 1;
     return

@@ -1,6 +1,7 @@
 % Skrypt testujacy BGS (backwards Gauss-Seidel)
 % Ax = b
-% A - macierz 
+% A - macierz trojdiagonalna rozmiaru (n x n) o elementach zespolonych
+% b - wektor rozmiaru n o elementach zespolonych
 
 % Konfiguracja
 % Wielkosc ukladu rownan

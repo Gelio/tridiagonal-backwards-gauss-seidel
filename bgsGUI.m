@@ -135,7 +135,7 @@ else
 end
 
 set(handles.iterationCount, 'String', liczbaIteracji);
-set(handles.timeElapsed, 'String', sprintf('%fms', czasDzialania*1000));
+set(handles.timeElapsed, 'String', sprintf('%.2fms', czasDzialania*1000));
 
 
 function bImagTo_Callback(hObject, eventdata, handles)
