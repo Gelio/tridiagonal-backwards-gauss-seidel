@@ -77,25 +77,25 @@ varargout{1} = handles.output;
 function pushbutton1_Callback(hObject, eventdata, handles)
 
 % Rozmiar uk³adu równañ
-N = str2double(handles.nEdit.String);
+N = str2double(get(handles.nEdit, 'String'));
 % Elementy z ukladu (odpowiednio R - czesc rzeczywista, I - czesc zespolona)
 % Przedzial na elementy pod i nad diagonala
-przedzialR = [str2double(handles.outsideDiagRealFrom.String) str2double(handles.outsideDiagRealTo.String)];
-przedzialI = [str2double(handles.outsideDiagImagFrom.String) str2double(handles.outsideDiagRealTo.String)];
+przedzialR = [str2double(get(handles.outsideDiagRealFrom, 'String')) str2double(get(handles.outsideDiagRealTo, 'String'))];
+przedzialI = [str2double(get(handles.outsideDiagImagFrom', 'String')) str2double(get(handles.outsideDiagRealTo, 'String'))];
 % Przedzial na elementy na diagonali
-przedzialDiagR = [str2double(handles.diagRealFrom.String) str2double(handles.diagRealTo.String)];
-przedzialDiagI = [str2double(handles.diagImagFrom.String) str2double(handles.diagImagTo.String)];
+przedzialDiagR = [str2double(get(handles.diagRealFrom, 'String')) str2double(get(handles.diagRealTo, 'String'))];
+przedzialDiagI = [str2double(get(handles.diagImagFrom, 'String')) str2double(get(handles.diagImagTo, 'String'))];
 % Przedzial na wektor b
-przedzialBR = [str2double(handles.bRealFrom.String) str2double(handles.bRealTo.String)];
-przedzialBI = [str2double(handles.bImagFrom.String) str2double(handles.bImagTo.String)];
+przedzialBR = [str2double(get(handles.bRealFrom, 'String')) str2double(get(handles.bRealTo, 'String'))];
+przedzialBI = [str2double(get(handles.bImagFrom, 'String')) str2double(get(handles.bImagTo, 'String'))];
 % Przedzial na wektor x0
-przedzialX0R = [str2double(handles.x0RealFrom.String) str2double(handles.x0RealTo.String)];
-przedzialX0I = [str2double(handles.x0ImagFrom.String) str2double(handles.x0ImagTo.String)];
+przedzialX0R = [str2double(get(handles.x0RealFrom, 'String')) str2double(get(handles.x0RealTo, 'String'))];
+przedzialX0I = [str2double(get(handles.x0ImagFrom, 'String')) str2double(get(handles.x0ImagTo, 'String'))];
 
 % Parametry stopu
-epsilon = str2double(handles.epsilonEdit.String);
-delta = str2double(handles.deltaEdit.String);
-maxIteracji = str2double(handles.maxIterEdit.String);
+epsilon = str2double(get(handles.epsilonEdit, 'String'));
+delta = str2double(get(handles.deltaEdit, 'String'));
+maxIteracji = str2double(get(handles.maxIterEdit, 'String'));
 
 % Generowanie wektorow
 % Wszystkie powinny byc tej samej dlugosci (N), stad dodajemy odpowiednio
