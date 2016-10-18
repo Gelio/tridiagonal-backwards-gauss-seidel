@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \setlength{\parskip}{1em}
 
 
@@ -262,6 +263,62 @@
 			Liczba iteracji: $19$\\
 			Rząd błędu: $-1$\\
 			Czas działania: $0.722562\text{ms}$
+		
+		\item
+			$n = 100$\\
+			Elementy na diagonali porównywalne z elementami na dwóch innych pasmach (zarówno część rzeczywista, jak i urojona).
+			
+			\begin{align*}
+				\begin{tabular}{|c|c|c|}
+					\hline
+					               &         BGS          &       linsolve       \\ \hline
+					  Rząd błędu   &    \textit{brak}     &          4           \\ \hline
+					Czas działania &  $901.49\text{ms}$   &   $0.43\text{ms}$    \\ \hline
+					Ilość iteracji & \textit{nie dotyczy} & \textit{nie dotyczy} \\ \hline
+				\end{tabular}
+			\end{align*}
+		
+		\item
+			$n = 100$\\
+			Elementy na diagonali są większe (około ośmiokrotnie) od elementów na dwóch innych pasmach. Nie mają części urojonej.
+			
+			\begin{align*}
+				\begin{tabular}{|c|c|c|}
+					\hline
+					               &       BGS       &       linsolve       \\ \hline
+					  Rząd błędu   &        1        &          4           \\ \hline
+					Czas działania & $0.26\text{ms}$ &   $0.45\text{ms}$    \\ \hline
+					Ilość iteracji &       30        & \textit{nie dotyczy} \\ \hline
+				\end{tabular}
+			\end{align*}
+		
+		\item
+			$n = 100$\\
+			Elementy na diagonali są znacznie większe (około pięćdziesięciokrotnie) od elementów na dwóch innych pasmach. Ich część urojona jest porównywalna z częściami urojonymi elementów z innych pasm.
+			
+			\begin{align*}
+				\begin{tabular}{|c|c|c|}
+					\hline
+					               &       BGS       &       linsolve       \\ \hline
+					  Rząd błędu   &        1        &          4           \\ \hline
+					Czas działania & $0.11\text{ms}$ &   $0.37\text{ms}$    \\ \hline
+					Ilość iteracji &       12        & \textit{nie dotyczy} \\ \hline
+				\end{tabular}
+			\end{align*}
+		
+		\item
+			$n = 100$\\
+			Elementy na diagonali są znacznie większe (około pięćdziesięciokrotnie) od elementów na dwóch innych pasmach, zarówno część urojona, jak i rzeczywista.
+			
+			\begin{align*}
+				\begin{tabular}{|c|c|c|}
+					\hline
+					               &        BGS        &       linsolve       \\ \hline
+					  Rząd błędu   &   \textit{brak}   &          4           \\ \hline
+					Czas działania & $748.37\text{ms}$ &   $0.41\text{ms}$    \\ \hline
+					Ilość iteracji &       10000       & \textit{nie dotyczy} \\ \hline
+				\end{tabular}
+			\end{align*}
 	\end{enumerate}
 
 
@@ -273,6 +330,12 @@
 			
 		\item
 			Im elementy z głównej diagonali są większe od elementów z pozostałych dwóch pasm, tym dokładność algorytmu jest lepsza. Można to zauważyć porównując układ 1, w którym elementy na diagonali były znacznie większe od pozostałych, oraz układ 5, gdzie elementy z diagonali były maksymalnie pięciokrotnie większe.
+		
+		\item
+			Wraz ze wzrostem ilość równań (a więc i niewiadomych) metoda Gaussa-Seidla w tył staje się szybsza w porównaniu ze zwykłą funkcją $linsolve$ (przykład: układ 7 oraz 8), o ile tylko metoda jest zbieżna.
+		
+		\item
+			Metoda Gaussa-Seidla w tył działa znacznie dłużej od $linsolve$ dla dużych macierzy, jeżeli metoda nie jest zbieżna (przykład: układ 9).
 	\end{enumerate}
 
 	
@@ -297,9 +360,17 @@
 	
 	Interfejs graficzny jest graficzną wersją skryptu testującego \textit{testScript.m} i pokazuje następujące wyniki:
 	\begin{itemize}
-		\item rząd błędu liczony względem rozwiązania obliczonego za pomocą $linsolve$ dostępnego w Matlabie
+		\item rząd błędu rozwiązania obliczonego za pomocą $linsolve$ dostępnego w Matlabie oraz czas działania tych obliczeń (w milisekundach)
 		\item rząd błędu liczony względem wektora $b$ ($\|Ax - b\|$)
 		\item ilość iteracji
-		\item czas działania (w milisekundach)
+		\item czas działania metody Gaussa-Seidla w tył (w milisekundach)
+	\end{itemize}
+
+	\pagebreak
+
+	\section{Bibliografia}
+	\begin{itemize}
+		\item \href{https://pl.wikipedia.org/wiki/Metoda_Gaussa-Seidla}{Metoda Gaussa-Seidla - Wikipedia, wolna encyklopedia}
+		\item P. Tatjewski \textit{Metody numeryczne}, Warszawa: Oficyna Wydawnicza PW, 2013
 	\end{itemize}
 \end{document}
