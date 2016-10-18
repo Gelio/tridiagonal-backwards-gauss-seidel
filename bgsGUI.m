@@ -22,7 +22,7 @@ function varargout = bgsGUI(varargin)
 
 % Edit the above text to modify the response to help bgsGUI
 
-% Last Modified by GUIDE v2.5 15-Oct-2016 10:42:40
+% Last Modified by GUIDE v2.5 18-Oct-2016 14:54:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -111,31 +111,41 @@ b = randComplex(przedzialBR, przedzialBI, 1, N);
 % Generowanie przyblizenia poczatkowego x0
 x0 = randComplex(przedzialX0R, przedzialX0I, 1, N);
 
-% Rozwiazywanie ukladu
+% Rozwiazywanie ukladu za pomoca BGS
 tic;
-[x, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta, maxIteracji);
-czasDzialania = toc;
-
-if all(isnan(x))
-    set(handles.errorMagnitudeLinsolve, 'String', 'blad');
-    set(handles.errorMagnitudeMultiplication, 'String', 'blad');
-else
-    % Obliczenie prawdziwego rozwiazania niezalezna metoda
-    xNiezalezne = reshape(linsolve(A, reshape(b, N, 1)), 1, N);
-    
-    % Obliczenie bledow
-    bladLinsolve = norm(x-xNiezalezne);
-    rzadBleduLinsolve = round(log10(bladLinsolve));
-
-    bladPoWymnozeniu = norm(A*reshape(x, N, 1) - reshape(b, N, 1));
-    rzadBleduPoWymnozeniu = round(log10(bladPoWymnozeniu));
-    
-    set(handles.errorMagnitudeLinsolve, 'String', rzadBleduLinsolve);
-    set(handles.errorMagnitudeMultiplication, 'String', rzadBleduPoWymnozeniu);
-end
+[xBGS, liczbaIteracji] = bgs(low, dia, upp, b, x0, epsilon, delta, maxIteracji);
+czasBGS = toc;
 
 set(handles.iterationCount, 'String', liczbaIteracji);
-set(handles.timeElapsed, 'String', sprintf('%.2fms', czasDzialania*1000));
+set(handles.timeElapsedBGS, 'String', sprintf('%.2fms', czasBGS*1000));
+
+if all(isnan(xBGS))
+    set(handles.errorMagnitudeBGS, 'String', 'blad');
+else
+    % Obliczenie bledow
+    bladBGS = norm(A*reshape(xBGS, N, 1) - reshape(b, N, 1));
+    rzadBleduBGS = round(log10(bladBGS));
+    set(handles.errorMagnitudeBGS, 'String', rzadBleduBGS);
+end
+
+
+% Obliczenie rozwiazania niezalezna metoda linsolve
+tic
+xLinsolve = linsolve(A, reshape(b, N, 1));
+czasLinsolve = toc;
+
+set(handles.timeElapsedLinsolve, 'String', sprintf('%.2fms', czasLinsolve*1000));
+
+if all(isnan(xLinsolve))
+    set(handles.errorMagnitudeLinsolve, 'String', 'blad');
+else
+    % Obliczenie bledow
+    bladLinsolve = norm(A*xLinsolve - b);
+    rzadBleduLinsolve = round(log10(bladLinsolve));
+    set(handles.errorMagnitudeLinsolve, 'String', rzadBleduLinsolve);
+end
+
+
 
 
 function bImagTo_Callback(hObject, eventdata, handles)

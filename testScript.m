@@ -49,19 +49,28 @@ czasDzialania = toc;
 if all(isnan(x))
     fprintf('Nie mozna obliczyc rozwiazania. Osiagnieto maksymalna liczbe iteracji, a wynik nie jest liczba.\n');
 else
-    % Obliczenie prawdziwego rozwiazania niezalezna metoda
-    xNiezalezne = reshape(linsolve(A, reshape(b, N, 1)), 1, N);
-    
     % Obliczenie bledu
-    bladLinsolve = norm(x-xNiezalezne);
-    rzadBleduLinsolve = round(log10(bladLinsolve));
-    
-    bladPoWymnozeniu = norm(A*reshape(x, N, 1) - reshape(b, N, 1));
-    rzadBleduPoWymnozeniu = round(log10(bladPoWymnozeniu));
+    bladBGS = norm(A*reshape(x, N, 1) - reshape(b, N, 1));
+    rzadBleduBGS = round(log10(bladBGS));
 
     fprintf('Obliczono rozwiazanie w ciagu %d iteracji.\n', liczbaIteracji);
-    fprintf('Rzad bledu (wzgledem linsolve): %d\n', rzadBleduLinsolve);
-    fprintf('Rzad bledu (wzgledem wyliczonego wektora b): %d\n', rzadBleduPoWymnozeniu);
+    fprintf('Rzad bledu BGS: %d\n', rzadBleduBGS);
 end
+fprintf('Czas dzialania BGS: %f ms\n', czasDzialania*1000);
 
-fprintf('Czas dzialania: %fms\n', czasDzialania*1000);
+
+% Obliczenie rozwiazania niezalezna metoda linsolve
+fprintf('\nPorownanie z funkcja linsolve\n');
+tic;
+xLinsolve = linsolve(A, reshape(b, N, 1));
+czasLinsolve = toc;
+
+if all(isnan(xLinsolve))
+    fprintf('Linsolve tez nie dalo dobrych rozwiazan.\n');
+else
+    % Obliczenie bledu
+    bladLinsolve = norm(A*xLinsolve - b);
+    rzadBleduLinsolve = round(log10(bladLinsolve));
+    fprintf('Rzad bledu linsolve: %d\n', rzadBleduLinsolve);
+end
+fprintf('Czas dzialania linsolve: %f ms\n', czasLinsolve*1000);
